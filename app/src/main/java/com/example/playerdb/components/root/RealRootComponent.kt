@@ -6,6 +6,7 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
+import com.example.playerdb.network.domain.repository.KtorRepository
 import com.example.playerdb.components.auth.RealAuthComponent
 import com.example.playerdb.components.main.RealMainComponent
 import com.example.playerdb.components.root.RootComponent.Child
@@ -13,7 +14,8 @@ import kotlinx.serialization.Serializable
 import javax.inject.Inject
 
 class RealRootComponent @Inject constructor(
-    componentContext: ComponentContext
+    private val componentContext: ComponentContext,
+    private val ktorRepository: KtorRepository
 ) : RootComponent, ComponentContext by componentContext {
 
     private val navigation = StackNavigation<Config>()
@@ -41,7 +43,8 @@ class RealRootComponent @Inject constructor(
 
     private fun mainComponent(componentContext: ComponentContext) =
         RealMainComponent(
-            componentContext = componentContext
+            componentContext = componentContext,
+            ktorRepository = ktorRepository
         )
 
     @Serializable

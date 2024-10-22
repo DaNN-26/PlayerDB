@@ -3,8 +3,10 @@ package com.example.playerdb.ui.auth.signIn
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,6 +19,7 @@ import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.example.playerdb.components.auth.signIn.SignInComponent
 import com.example.playerdb.mvi.auth.signIn.SignInIntent
 import com.example.playerdb.ui.components.ChangeTextField
+import com.example.playerdb.ui.components.TopBar
 
 @Composable
 fun SignIn(
@@ -24,13 +27,16 @@ fun SignIn(
 ) {
     val state by component.state.subscribeAsState()
 
-    Surface(
+    Scaffold(
+        topBar = { TopBar(title = "Authorization") },
         modifier = Modifier.fillMaxSize()
-    ) {
+    ) { contentPadding ->
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(contentPadding)
         ) {
             ChangeTextField(
                 value = state.email,

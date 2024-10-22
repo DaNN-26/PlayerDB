@@ -21,4 +21,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "PlayerDB"
 include(":app")
-include(":network")

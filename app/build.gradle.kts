@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.compose.compiler)
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android") version "2.51.1"
     kotlin("plugin.serialization") version "2.0.0"
@@ -56,10 +57,9 @@ val decomposeVersion: String by project
 val serializationVersion: String by project
 val hiltVersion: String by project
 val ktorVersion: String by project
+val coilVersion: String by project
 
 dependencies {
-    implementation(project("::network"))
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -92,6 +92,10 @@ dependencies {
     implementation("io.ktor:ktor-client-cio:$ktorVersion")
     implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
+
+    //coil
+    implementation("io.coil-kt.coil3:coil-compose:$coilVersion")
+    implementation("io.coil-kt.coil3:coil-network-okhttp:$coilVersion")
 
     //material icons
     implementation("androidx.compose.material:material-icons-extended:1.7.3")

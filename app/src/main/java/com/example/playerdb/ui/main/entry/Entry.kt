@@ -5,7 +5,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,6 +21,7 @@ import com.example.playerdb.components.main.MainComponent
 import com.example.playerdb.components.main.entry.EntryComponent
 import com.example.playerdb.mvi.main.entry.EntryIntent
 import com.example.playerdb.ui.components.ChangeTextField
+import com.example.playerdb.ui.components.TopBar
 
 @Composable
 fun Entry(
@@ -26,28 +29,35 @@ fun Entry(
 ) {
     val state = component.state.subscribeAsState()
 
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
+    Scaffold(
+        topBar = { TopBar(title = "Finder") },
         modifier = Modifier.fillMaxSize()
-    ) {
-        Text(
-            text = "STEAMID FINDER",
-            fontWeight = FontWeight.SemiBold,
-            fontSize = 24.sp
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        ChangeTextField(
-            value = state.value.id,
-            label = "STEAMID",
-            desc = "",
-            onValueChanged = { component.processIntent(EntryIntent.OnIdChange(it)) },
-            isPassword = false,
-            keyboardType = KeyboardType.NumberPassword
-        )
-        Text(text = "Example: 76561197960287930")
-        Button(onClick = { component.processIntent(EntryIntent.FindClick) }) {
-            Text(text = "Find")
+    ) { contentPadding ->
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(contentPadding)
+        ) {
+            Text(
+                text = "STEAMID FINDER",
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 24.sp
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            ChangeTextField(
+                value = state.value.id,
+                label = "STEAMID",
+                desc = "",
+                onValueChanged = { component.processIntent(EntryIntent.OnIdChange(it)) },
+                isPassword = false,
+                keyboardType = KeyboardType.NumberPassword
+            )
+            Text(text = "Example: 76561197960287930")
+            Button(onClick = { component.processIntent(EntryIntent.FindClick) }) {
+                Text(text = "Find")
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
-package com.example.playerdb.di
+package com.example.playerdb.network.di
 
-import com.example.network.repository.KtorRepositoryImpl
+import com.example.playerdb.network.domain.repository.KtorRepository
+import com.example.playerdb.network.data.repository.KtorRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,10 +15,10 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class AppModule {
+object NetworkModule {
     @Provides
     @Singleton
-    fun provideHttpClient() =
+    fun provideHttpClient(): HttpClient =
         HttpClient(CIO) {
             install(ContentNegotiation) {
                 json(
@@ -30,6 +31,6 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun providesRepository(client: HttpClient) =
+    fun providesRepository(client: HttpClient): KtorRepository =
         KtorRepositoryImpl(client)
 }

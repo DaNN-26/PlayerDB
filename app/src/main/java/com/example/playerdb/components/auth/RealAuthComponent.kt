@@ -48,7 +48,6 @@ class RealAuthComponent @Inject constructor(
             navigateToMain = navigateToMain
         )
 
-
     @Serializable
     private sealed interface Config {
         @Serializable

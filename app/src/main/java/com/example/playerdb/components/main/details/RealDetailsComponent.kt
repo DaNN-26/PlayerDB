@@ -1,12 +1,12 @@
 package com.example.playerdb.components.main.details
 
+import android.util.Log
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.value.MutableValue
-import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.value.update
-import com.example.network.repository.KtorRepository
 import com.example.playerdb.mvi.main.details.DetailsIntent
 import com.example.playerdb.mvi.main.details.DetailsState
+import com.example.playerdb.network.domain.repository.KtorRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -16,6 +16,7 @@ import javax.inject.Inject
 class RealDetailsComponent @Inject constructor(
     private val componentContext: ComponentContext,
     private val ktorRepository: KtorRepository,
+    private val navigateBack: () -> Unit,
     private val userId: String
 ) : DetailsComponent, ComponentContext by componentContext {
 
@@ -25,7 +26,7 @@ class RealDetailsComponent @Inject constructor(
 
     override val state = _state
 
-    private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+    private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     init {
         processIntent(DetailsIntent.GetDetails)
@@ -34,6 +35,7 @@ class RealDetailsComponent @Inject constructor(
     override fun processIntent(intent: DetailsIntent) {
         when(intent) {
             is DetailsIntent.GetDetails -> getUserDetails(userId = userId)
+            is DetailsIntent.NavigateBack -> navigateBack()
         }
     }
 
@@ -41,10 +43,18 @@ class RealDetailsComponent @Inject constructor(
         scope.launch {
             try {
                 val user = ktorRepository.getSteamUser(userId)
-                _state.update { it.copy(user = user)}
+                _state.update { it.copy(user = user, isLoading = false) }
+                checkError()
             } catch (e: Exception) {
-                e.printStackTrace()
+                Log.d("Error", e.message.toString())
             }
         }
+    }
+
+    private fun checkError() {
+        if (state.value.user.success)
+                _state.update { it.copy(isError = false) }
+            else
+                _state.update { it.copy(isError = true) }
     }
 }
