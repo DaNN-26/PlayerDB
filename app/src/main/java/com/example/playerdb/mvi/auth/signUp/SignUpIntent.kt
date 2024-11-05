@@ -5,4 +5,6 @@ sealed class SignUpIntent {
     class PasswordChanged(val password: String) : SignUpIntent()
     class IsPasswordVisible(val isPasswordVisible: Boolean) : SignUpIntent()
     data object SignUpClick : SignUpIntent()
+    data object GoogleSignInClick: SignUpIntent()
+    data object NavigateToSignIn: SignUpIntent()
 }

@@ -9,8 +9,8 @@ import com.arkivanov.decompose.extensions.compose.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.stack.animation.plus
 import com.arkivanov.decompose.extensions.compose.stack.animation.scale
 import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
-import com.example.playerdb.components.root.RootComponent.*
 import com.example.playerdb.components.root.RootComponent
+import com.example.playerdb.components.root.RootComponent.Child
 import com.example.playerdb.ui.auth.Auth
 import com.example.playerdb.ui.main.Main
 

@@ -9,11 +9,12 @@ import javax.inject.Inject
 
 class RealEntryComponent @Inject constructor(
     private val componentContext: ComponentContext,
-    val onFindClick: (String) -> Unit
+    private val onFindClick: (String) -> Unit,
+    private val onSignOutClick: () -> Unit
 ) : EntryComponent, ComponentContext by componentContext {
 
     private val _state = MutableValue(
-        stateKeeper.consume("ENTRY_COMPONENT", EntryState.serializer()) ?: EntryState()
+        stateKeeper.consume(ENTRY_COMPONENT, EntryState.serializer()) ?: EntryState()
     )
 
     override val state = _state
@@ -22,6 +23,11 @@ class RealEntryComponent @Inject constructor(
         when(intent) {
             is EntryIntent.OnIdChange -> { _state.update { it.copy(id = intent.id) } }
             is EntryIntent.FindClick -> onFindClick(state.value.id)
+            is EntryIntent.SignOutClick -> onSignOutClick()
         }
+    }
+
+    companion object {
+        const val ENTRY_COMPONENT = "ENTRY_COMPONENT"
     }
 }

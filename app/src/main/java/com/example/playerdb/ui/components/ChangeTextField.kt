@@ -21,6 +21,7 @@ fun ChangeTextField(
     label: String,
     desc: String,
     onValueChanged: (String) -> Unit,
+    isError: Boolean = false,
     isPassword: Boolean,
     isPasswordVisible: Boolean = true,
     onPasswordVisibleClick: () -> Unit = {},
@@ -41,6 +42,8 @@ fun ChangeTextField(
                 imeAction = imeAction,
                 keyboardType = keyboardType
             ),
+            isError = isError,
+            singleLine = true,
             visualTransformation = if(isPasswordVisible)
                 VisualTransformation.None
             else

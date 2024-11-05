@@ -2,8 +2,11 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
+
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android") version "2.51.1"
+    id("com.google.gms.google-services")
+
     kotlin("plugin.serialization") version "2.0.0"
 }
 
@@ -75,6 +78,9 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(libs.play.services.auth)
+    implementation(libs.firebase.common.ktx)
+    implementation(libs.firebase.auth.ktx)
 
     //decompose
     implementation("com.arkivanov.decompose:decompose:$decomposeVersion")
@@ -98,5 +104,5 @@ dependencies {
     implementation("io.coil-kt.coil3:coil-network-okhttp:$coilVersion")
 
     //material icons
-    implementation("androidx.compose.material:material-icons-extended:1.7.3")
+    implementation("androidx.compose.material:material-icons-extended:1.7.5")
 }

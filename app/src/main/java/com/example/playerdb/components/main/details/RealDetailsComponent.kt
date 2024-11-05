@@ -16,12 +16,12 @@ import javax.inject.Inject
 class RealDetailsComponent @Inject constructor(
     private val componentContext: ComponentContext,
     private val ktorRepository: KtorRepository,
-    private val navigateBack: () -> Unit,
+    private val onProfileClick: (String) -> Unit,
     private val userId: String
 ) : DetailsComponent, ComponentContext by componentContext {
 
     private val _state = MutableValue(
-        stateKeeper.consume("DETAILS_COMPONENT", DetailsState.serializer()) ?: DetailsState()
+        stateKeeper.consume(DETAILS_COMPONENT, DetailsState.serializer()) ?: DetailsState()
     )
 
     override val state = _state
@@ -35,7 +35,7 @@ class RealDetailsComponent @Inject constructor(
     override fun processIntent(intent: DetailsIntent) {
         when(intent) {
             is DetailsIntent.GetDetails -> getUserDetails(userId = userId)
-            is DetailsIntent.NavigateBack -> navigateBack()
+            is DetailsIntent.OpenProfileUrl -> onProfileClick(state.value.user.data.player.meta.profileUrl)
         }
     }
 
@@ -56,5 +56,9 @@ class RealDetailsComponent @Inject constructor(
                 _state.update { it.copy(isError = false) }
             else
                 _state.update { it.copy(isError = true) }
+    }
+
+    companion object {
+        const val DETAILS_COMPONENT = "DETAILS_COMPONENT"
     }
 }

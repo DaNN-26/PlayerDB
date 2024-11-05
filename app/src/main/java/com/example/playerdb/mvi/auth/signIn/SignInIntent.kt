@@ -5,4 +5,5 @@ sealed class SignInIntent {
     class PasswordChanged(val password: String) : SignInIntent()
     class IsPasswordVisible(val isPasswordVisible: Boolean) : SignInIntent()
     data object SignInClick : SignInIntent()
+    data object NavigateToSignUp : SignInIntent()
 }

@@ -6,5 +6,6 @@ import kotlinx.serialization.Serializable
 data class SignInState(
     val email: String = "",
     val password: String = "",
-    val isPasswordVisible: Boolean = false
+    val isPasswordVisible: Boolean = false,
+    val isError: Boolean = false
 )
